@@ -10,7 +10,6 @@ class Bullet {
     private int positionX;
     private int positionY;
     private double radius;
-    private final static double BASE_VELOCITY = 50;
     private double velocityX;
     private double velocityY;
     private final static double GRAVITY = 9.8;
@@ -18,7 +17,7 @@ class Bullet {
     private boolean shot = false;
     private final static Color COLOR = Color.darkGray;
 
-    public Bullet(double radius, int originX, int originY, double angle) {
+    public Bullet(double radius, int originX, int originY, double angle, double BASE_VELOCITY) {
         this.radius = radius;
         this.originX = originX;
         this.originY = originY;

@@ -2,7 +2,9 @@ package Meeting02_Shooter;
 
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import java.awt.EventQueue;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -16,6 +18,8 @@ import java.awt.event.KeyEvent;
 
     TODO:
      1. Add a text field to adjust bullet's velocity
+        > DONE!
+        > Input desired velocity, press space to shoot immediately.
      2. Make cannon able to shoot more than one bullet
      3. Limit the amount of bullet in the cannon
      4. Add wind force, with its direction (which impacts acceleration on x-axis and y-axis; use Newton's second law)
@@ -53,8 +57,14 @@ class Shooter {
 
         // setup control panel itself
         JTextArea instruction = new JTextArea(INSTRUCTION);
-        instruction.setBounds(5, 5, cpSize - 5, frame.getHeight());
+        instruction.setBounds(5, 5, cpSize - 5, 50);
+        JLabel bVLabel = new JLabel("Bullet Velocity");
+        JTextField bulletVelocity = new JTextField("50");
+        bulletVelocity.setBounds(5, 75, cpSize-5, 20);
+        bVLabel.setBounds(5, 55, cpSize-5, 20);
         frame.add(instruction);
+        frame.add(bVLabel);
+        frame.add(bulletVelocity);
 
         // setup drawing area
         DrawingArea drawingArea = new DrawingArea(frame.getWidth(), frame.getHeight(), cpSize);
@@ -63,13 +73,28 @@ class Shooter {
         frame.add(drawingArea);
 
         // Keyboard shortcuts
+        bulletVelocity.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_SPACE:
+                        frame.requestFocusInWindow();
+                        bullet = new Bullet(cannon.getBarrelWidth() / 2, (int) cannon.getBarrelMouthX(), (int) cannon.getBarrelMouthY(), cannon.getAngle(), Double.parseDouble(bulletVelocity.getText()));
+                        drawingArea.setBullet(bullet);
+                        bullet.shoot();
+                        break;
+                }
+            }
+        });
+
         frame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_SPACE:
-                        bullet = new Bullet(cannon.getBarrelWidth() / 2, (int) cannon.getBarrelMouthX(), (int) cannon.getBarrelMouthY(), cannon.getAngle());
+                        bullet = new Bullet(cannon.getBarrelWidth() / 2, (int) cannon.getBarrelMouthX(), (int) cannon.getBarrelMouthY(), cannon.getAngle(), Double.parseDouble(bulletVelocity.getText()));
                         drawingArea.setBullet(bullet);
                         bullet.shoot();
                         break;
