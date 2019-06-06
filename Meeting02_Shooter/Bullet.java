@@ -17,12 +17,13 @@ class Bullet {
     private boolean shot = false;
     private final static Color COLOR = Color.darkGray;
 
-    public Bullet(double radius, int originX, int originY, double angle, double BASE_VELOCITY) {
+    public Bullet(double radius, int originX, int originY, double angle, double BASE_VELOCITY, double time) {
         this.radius = radius;
         this.originX = originX;
         this.originY = originY;
         this.velocityX = BASE_VELOCITY * Math.cos(angle);
         this.velocityY = BASE_VELOCITY * Math.sin(angle);
+        this.timeInitial = time;
     }
 
     public void setTime(double time) {

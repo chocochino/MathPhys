@@ -21,6 +21,8 @@ import java.awt.event.KeyEvent;
         > DONE!
         > Input desired velocity, press space to shoot immediately.
      2. Make cannon able to shoot more than one bullet
+        > OK!!
+        > Press space multiple times to shoot indefinitely!
      3. Limit the amount of bullet in the cannon
      4. Add wind force, with its direction (which impacts acceleration on x-axis and y-axis; use Newton's second law)
      5. Make a shooter game with simple moving target (yes, over-achievers, I need SIMPLE)
@@ -80,9 +82,8 @@ class Shooter {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_SPACE:
                         frame.requestFocusInWindow();
-                        bullet = new Bullet(cannon.getBarrelWidth() / 2, (int) cannon.getBarrelMouthX(), (int) cannon.getBarrelMouthY(), cannon.getAngle(), Double.parseDouble(bulletVelocity.getText()));
+                        bullet = new Bullet(cannon.getBarrelWidth() / 2, (int) cannon.getBarrelMouthX(), (int) cannon.getBarrelMouthY(), cannon.getAngle(), Double.parseDouble(bulletVelocity.getText()), drawingArea.getTime());
                         drawingArea.setBullet(bullet);
-                        bullet.shoot();
                         break;
                 }
             }
@@ -94,9 +95,8 @@ class Shooter {
                 super.keyPressed(e);
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_SPACE:
-                        bullet = new Bullet(cannon.getBarrelWidth() / 2, (int) cannon.getBarrelMouthX(), (int) cannon.getBarrelMouthY(), cannon.getAngle(), Double.parseDouble(bulletVelocity.getText()));
+                        bullet = new Bullet(cannon.getBarrelWidth() / 2, (int) cannon.getBarrelMouthX(), (int) cannon.getBarrelMouthY(), cannon.getAngle(), Double.parseDouble(bulletVelocity.getText()), drawingArea.getTime());
                         drawingArea.setBullet(bullet);
-                        bullet.shoot();
                         break;
                     case KeyEvent.VK_LEFT:
                         cannon.rotateLeft();
