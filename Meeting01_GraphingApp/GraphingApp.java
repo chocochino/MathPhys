@@ -29,7 +29,7 @@ package Meeting01_GraphingApp;
         > Will do.
         > Changed: (function2) x-3 -> 1/x
         > Seems like the lines are 'discontinued' m'lady.
-     4. Change the function into trigonometric functions or any function that needs java.util.Math library
+     4. Change the function into trigonometric functions or any function that needs java.lang.Math library
         > OK.
         > Changed: (function1) 3*x+1 -> sin(x)*10
         > Changed: (function2) 1/x -> cos(x)*10
