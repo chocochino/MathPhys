@@ -45,6 +45,15 @@ class DrawingArea extends JPanel {
         return Math.cos(x)*10;
     }
 
+    // parametric functions
+    private double parametric1x(double t) {
+        return 2*Math.cos(t)+Math.sin(2*t)*Math.cos(60*t);
+    }
+
+    private double parametric1y(double t) {
+        return Math.sin(2*t)+Math.sin(60*t);
+    } 
+
     // start drawing graph
     public void beginDrawing(double lengthX, double lengthY, double startX, double increment) {
         // retrieve data
@@ -89,12 +98,12 @@ class DrawingArea extends JPanel {
     private void update()
     {
         // while there is still a need to draw
-        if(currentX < lengthX && currentX > -lengthX && points1.size() < MAX_POINTS)
+        if(currentX < lengthX && currentX > -lengthX)
         {
             System.out.println("checking");
             currentX = currentX + increment;
             points1.add(new Point2D.Double(currentX, function1(currentX)));
-            points2.add(new Point2D.Double(currentX, function2(currentX)));
+            points2.add(new Point2D.Double(parametric1x(currentX), parametric1y(currentX)));
         }
         else {      // cleanup for the next thread
             draw = false;

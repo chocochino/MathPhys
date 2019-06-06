@@ -35,6 +35,10 @@ package Meeting01_GraphingApp;
         > Changed: (function2) 1/x -> cos(x)*10
         > Changed function2's line color to RED for better visibility.
      5. Change the function and fields into parametric functions
+        > OK.
+        > Paramtric Equation to be used: x(t) = 2*cos(t)+sin(2*t)*cos(60*t) and y=sin(2*t)+sin(60*t)
+        > I ditched the MAX_POINTS so that my graphs will draw itself until completion. Or until the black line (points1) touch the edge of the screen to be exact.
+        > The parametric function is applied to the red line (points2)
      6. Change the coordinates into polar coordinates
 */
 
