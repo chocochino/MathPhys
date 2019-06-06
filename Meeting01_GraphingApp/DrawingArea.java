@@ -37,11 +37,11 @@ class DrawingArea extends JPanel {
 
     // functions to draw on the screen
     private double function1(double x) {
-        return 4*x*x-16;
+        return 3*x+1;
     }
 
     private double function2(double x) {
-        return 2*x+1;
+        return x-3;
     }
 
     // start drawing graph

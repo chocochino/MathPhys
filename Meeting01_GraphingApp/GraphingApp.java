@@ -23,6 +23,8 @@ package Meeting01_GraphingApp;
           'Incremental factor' is to determine how much is the offset of X per tick. Finer lines require smaller increment. This is the reason behind why Anti Aliasing is so costly.
         > Bigger Increment -> Rougher, less detailed lines. Smaller Increment -> Smoother, more detailed lines.
      2. Change the function into another continuous linear/polynomial function
+        > Changed: (function1) 4*x*x-16 -> 3*x+1
+        > Changed: (function2) 2*x+1 -> x-3
      3. Change the function into other functions with discontinuity, such as 1/x. What happened?
      4. Change the function into trigonometric functions or any function that needs java.util.Math library
      5. Change the function and fields into parametric functions
@@ -99,6 +101,12 @@ class GraphingApp {
         JButton button = new JButton("Begin graphing");
         button.addActionListener(e -> sendValuesToDrawer());
         controlPanel.add(button);
+
+        //setting debug values to test things more efficiently
+        fieldLengthX.setText("30");
+        fieldLengthY.setText("30");
+        fieldBegin.setText("-30");
+        fieldIncrement.setText("0.1");
     }
 
     // get values from text fields
