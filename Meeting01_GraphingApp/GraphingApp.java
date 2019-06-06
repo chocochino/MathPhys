@@ -15,6 +15,13 @@ package Meeting01_GraphingApp;
 
     TODO:
      1. Play with the app. What does each field do? What's the difference if you change one field? What if you use smaller/bigger increment factor?
+        > I don't know how I can 'modify' the code to do this bit of the assignment so I just comment here to prove that I have played around with the app :)
+        > I'm asumming the 'field' we are talking about is the JTextField in the program. In that case:
+          'Length of X axis' field is to determine the length of x axis (duh). X ranges from -x to x.
+          'Length of Y axis' field is to determine the length of y axis (duh). y ranges from -y to y.
+          'Start point from X' field is to determing the start of the drawing sequence. If this field is set to 1 then the drawing will begin from x=1.
+          'Incremental factor' is to determine how much is the offset of X per tick. Finer lines require smaller increment. This is the reason behind why Anti Aliasing is so costly.
+        > Bigger Increment -> Rougher, less detailed lines. Smaller Increment -> Smoother, more detailed lines.
      2. Change the function into another continuous linear/polynomial function
      3. Change the function into other functions with discontinuity, such as 1/x. What happened?
      4. Change the function into trigonometric functions or any function that needs java.util.Math library
