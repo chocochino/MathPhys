@@ -26,6 +26,9 @@ package Meeting01_GraphingApp;
         > Changed: (function1) 4*x*x-16 -> 3*x+1
         > Changed: (function2) 2*x+1 -> x-3
      3. Change the function into other functions with discontinuity, such as 1/x. What happened?
+        > Will do.
+        > Changed: (function2) x-3 -> 1/x
+        > Seems like the lines are 'discontinued' m'lady.
      4. Change the function into trigonometric functions or any function that needs java.util.Math library
      5. Change the function and fields into parametric functions
      6. Change the coordinates into polar coordinates

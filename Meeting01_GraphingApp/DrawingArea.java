@@ -41,7 +41,7 @@ class DrawingArea extends JPanel {
     }
 
     private double function2(double x) {
-        return x-3;
+        return 1/x;
     }
 
     // start drawing graph
