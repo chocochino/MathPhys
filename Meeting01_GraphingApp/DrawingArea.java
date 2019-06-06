@@ -36,6 +36,15 @@ class DrawingArea extends JPanel {
         drawingArea = createImage(this.width, this.height);
     }
 
+    // coordinate converter
+    private double convertX(double r, double theta) {
+        return r * Math.cos(theta);
+    }
+
+    private double convertY(double r, double theta) {
+        return r * Math.sin(theta);
+    }
+
     // functions to draw on the screen
     private double function1(double x) {
         return Math.sin(x)*10;
@@ -52,7 +61,12 @@ class DrawingArea extends JPanel {
 
     private double parametric1y(double t) {
         return Math.sin(2*t)+Math.sin(60*t);
-    } 
+    }
+
+    // polar coordinate functions
+    private double polar1(double theta) {
+        return Math.cos(4.4*theta)*10;
+    }
 
     // start drawing graph
     public void beginDrawing(double lengthX, double lengthY, double startX, double increment) {
@@ -102,7 +116,10 @@ class DrawingArea extends JPanel {
         {
             System.out.println("checking");
             currentX = currentX + increment;
-            points1.add(new Point2D.Double(currentX, function1(currentX)));
+            double r = polar1(currentX);
+            double newX = convertX(r, currentX);
+            double newY = convertY(r, currentX);
+            points1.add(new Point2D.Double(newX, newY));
             points2.add(new Point2D.Double(parametric1x(currentX), parametric1y(currentX)));
         }
         else {      // cleanup for the next thread

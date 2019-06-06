@@ -40,6 +40,9 @@ package Meeting01_GraphingApp;
         > I ditched the MAX_POINTS so that my graphs will draw itself until completion. Or until the black line (points1) touch the edge of the screen to be exact.
         > The parametric function is applied to the red line (points2)
      6. Change the coordinates into polar coordinates
+        > Alrighty!
+        > Added convertX and convertY functions to convert polar coordinates to cartesian ones.
+        > The polar function is applied to the black line (points1)
 */
 
 import javax.swing.JButton;
