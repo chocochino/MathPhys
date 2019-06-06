@@ -16,14 +16,20 @@ class Bullet {
     private double timeInitial;
     private boolean shot = false;
     private final static Color COLOR = Color.darkGray;
+    private int mass;
+    private int wind;
+    private int angle;
 
-    public Bullet(double radius, int originX, int originY, double angle, double BASE_VELOCITY, double time) {
+    public Bullet(double radius, int originX, int originY, double angle, double BASE_VELOCITY, double time, int mass, int wind, int windAngle) {
         this.radius = radius;
         this.originX = originX;
         this.originY = originY;
         this.velocityX = BASE_VELOCITY * Math.cos(angle);
         this.velocityY = BASE_VELOCITY * Math.sin(angle);
         this.timeInitial = time;
+        this.mass = mass;
+        this.wind = wind;
+        this.angle = windAngle;
     }
 
     public void setTime(double time) {
@@ -53,6 +59,10 @@ class Bullet {
      */
     public void move(double time) {
         double currentTime = time - timeInitial;
+
+        velocityX += wind * Math.cos(Math.toRadians(angle)) / mass;
+        velocityY += wind * Math.sin(Math.toRadians(angle)) / mass;
+
         positionX = (int) (originX + (velocityX * currentTime));
         positionY = (int) (originY - (velocityY * currentTime - GRAVITY * currentTime * currentTime / 2));
     }
