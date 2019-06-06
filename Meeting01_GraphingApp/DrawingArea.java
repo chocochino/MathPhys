@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.lang.Math;
 
 class DrawingArea extends JPanel {
     private boolean draw = false;
@@ -37,11 +38,11 @@ class DrawingArea extends JPanel {
 
     // functions to draw on the screen
     private double function1(double x) {
-        return 3*x+1;
+        return Math.sin(x)*10;
     }
 
     private double function2(double x) {
-        return 1/x;
+        return Math.cos(x)*10;
     }
 
     // start drawing graph
@@ -105,7 +106,6 @@ class DrawingArea extends JPanel {
         if (drawingArea != null) {
             //get graphics of the image where coordinate and function will be drawn
             Graphics g = drawingArea.getGraphics();
-            g.setColor(Color.BLACK);
 
             //draw the x-axis and y-axis
             g.drawLine(0, originY, width, originY);
@@ -123,8 +123,10 @@ class DrawingArea extends JPanel {
 
             // draw the lines
             for (int i = 0; i < points1.size() - 1; i++) {
+                g.setColor(Color.BLACK);
                 g.drawLine((int) (originX + points1.get(i).x * scaleX), (int) (originY - points1.get(i).y * scaleY),
                         (int) (originX + points1.get(i + 1).x * scaleX), (int) (originY - points1.get(i + 1).y * scaleY));
+                g.setColor(Color.RED);
                 g.drawLine((int) (originX + points2.get(i).x * scaleX), (int) (originY - points2.get(i).y * scaleY),
                         (int) (originX + points2.get(i + 1).x * scaleX), (int) (originY - points2.get(i + 1).y * scaleY));
             }

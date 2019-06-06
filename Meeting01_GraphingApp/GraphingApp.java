@@ -30,6 +30,10 @@ package Meeting01_GraphingApp;
         > Changed: (function2) x-3 -> 1/x
         > Seems like the lines are 'discontinued' m'lady.
      4. Change the function into trigonometric functions or any function that needs java.util.Math library
+        > OK.
+        > Changed: (function1) 3*x+1 -> sin(x)*10
+        > Changed: (function2) 1/x -> cos(x)*10
+        > Changed function2's line color to RED for better visibility.
      5. Change the function and fields into parametric functions
      6. Change the coordinates into polar coordinates
 */
