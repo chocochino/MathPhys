@@ -2,6 +2,7 @@ package Meeting02_Shooter;
 
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -21,6 +22,8 @@ class DrawingArea extends JPanel {
     private Thread animator;    // thread to draw the
     private Cannon cannon;
     private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+    private Target target;
+    private Boolean hitBoxLimiter = false;
 
     // setup the drawing area
     public DrawingArea(int width, int height, int cpSize) {
@@ -30,7 +33,7 @@ class DrawingArea extends JPanel {
         setBounds(cpSize, 0, this.width, this.height);
         drawingArea = createImage(this.width, this.height);
 
-        originX = this.width / 2;
+        originX = this.width / 4;
         originY = this.height / 2;
         lengthX = (this.width - originX) / GRAPH_SCALE;
         lengthY = (this.height - originY) / GRAPH_SCALE;
@@ -46,6 +49,7 @@ class DrawingArea extends JPanel {
 
     public void start() {
         animator.start();
+        target = new Target(100, getWidth()/4*3, (int)Math.sin(time));
     }
 
     public void setCannon(Cannon cannon) {
@@ -91,6 +95,39 @@ class DrawingArea extends JPanel {
                 }
             }
         }
+        target.move(time);
+        int targetCenterX = target.positionX + (int)target.radius;
+        int targetCenterY = target.positionY + (int)target.radius;
+        for(int i=0; i<bullets.size(); i++) {
+            if(bullets.get(i).getPositionX() + bullets.get(i).getRadius() > targetCenterX - target.radius &&
+                bullets.get(i).getPositionX() + bullets.get(i).getRadius() < targetCenterX + target.radius &&
+                bullets.get(i).getPositionY() + bullets.get(i).getRadius() > targetCenterY - target.radius &&
+                bullets.get(i).getPositionY() + bullets.get(i).getRadius() < targetCenterY + target.radius) {
+                    target.changeColor(Color.GREEN);
+
+                    int positionScore = (target.positionX-cannon.getPositionX())/10;
+                    int windPenalty = 0;
+                    int angleScore = Shooter.angle%360;
+                    int massScore = Shooter.mass;
+                    int radiusScore = (int)(300/target.radius)*10;
+
+                    Shooter.addScore(positionScore);
+                    if(Shooter.angle%360 == 0) {
+                        windPenalty = -Shooter.wind;
+                        Shooter.addScore(windPenalty);
+                    }
+                    Shooter.addScore(angleScore);
+                    Shooter.addScore(massScore);
+                    Shooter.addScore(radiusScore);
+                    Shooter.updateScore();
+                    Shooter.updateScoreStatistics(positionScore, windPenalty, angleScore, massScore, radiusScore);
+                    target.radius = Math.random() * 200 + 30;
+                    bullets.remove(i);
+                    Toolkit.getDefaultToolkit().beep();
+                } else {
+                    target.changeColor(Color.BLUE);
+                }
+        }
     }
 
     private void render() {
@@ -104,18 +141,7 @@ class DrawingArea extends JPanel {
 
             g.setColor(Color.black);
             //draw the x-axis and y-axis
-            g.drawLine(0, originY, getWidth(), originY);
-            g.drawLine(originX, 0, originX, getHeight());
-
-            //print numbers on the x-axis and y-axis, based on the scale
-            for (int i = 0; i < lengthX; i++) {
-                g.drawString(Integer.toString(i), (originX + (i * GRAPH_SCALE)), originY);
-                g.drawString(Integer.toString(-1 * i), (originX + (-i * GRAPH_SCALE)), originY);
-            }
-            for (int i = 0; i < lengthY; i++) {
-                g.drawString(Integer.toString(-1 * i), originX, (originY + (i * GRAPH_SCALE)));
-                g.drawString(Integer.toString(i), originX, (originY + (-i * GRAPH_SCALE)));
-            }
+            g.drawLine(originX+150, 0, originX+150, getHeight());
 
             // draw cannon and bullet
             cannon.draw(g);
@@ -124,6 +150,12 @@ class DrawingArea extends JPanel {
                     bullets.get(i).draw(g);
                 }
             }
+            if(Shooter.currentBullets == 0) {
+                g.setFont(new Font("Cambria", Font.PLAIN, 24)); 
+                g.drawString("GAME OVER!", getWidth()/2, getHeight()/2);
+                g.drawString("Your Final Score: " + Integer.toString(Shooter.score), getWidth()/2, getHeight()/2+20);
+            }
+            target.draw(g);
         }
     }
 

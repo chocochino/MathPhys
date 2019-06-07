@@ -32,8 +32,16 @@ class Bullet {
         this.angle = windAngle;
     }
 
+    public double getRadius() {
+        return this.radius;
+    }
+
     public void setTime(double time) {
         timeInitial = time;
+    }
+
+    public int getPositionX() {
+        return positionX;
     }
 
     public int getPositionY() {

@@ -35,6 +35,8 @@ import javax.swing.JButton;
         > Simply insert the values to the properties (Wind Force, Angle of direction, etc.), press the 'Apply Properties' button, and let it rip!
         > I also did some fine tuning.
      5. Make a shooter game with simple moving target (yes, over-achievers, I need SIMPLE)
+        > Game's Instructions is included in the game itself.
+        > Enjoy! If you can, this game kinda sucks to be honest.
 
     Extra:
     Q: Does this mean I can make a bullet hell game for my final project?
@@ -43,7 +45,7 @@ import javax.swing.JButton;
 
 
 class Shooter {
-    private JFrame frame;
+    private static JFrame frame;
 
     // game area
     private Bullet bullet = null;
@@ -51,29 +53,69 @@ class Shooter {
 
     // bullet magazine system
     private int maxBullets = 5;
-    private int currentBullets = 5;
+    public static int currentBullets = 5;
     private String bulletString = "Bullets: " + Integer.toString(currentBullets) + "/" + Integer.toString(maxBullets);
 
     // physics attributes
-    private int mass = 1;
-    private int wind = 10;
-    private int angle = 0;
+    public static int mass = 1;
+    public static int wind = 10;
+    public static int angle = 0;
+
+    // score system
+    public static int score = 0;
+    private static String scoreString = "Your Score: " + Integer.toString(score);
+    private static JLabel scoreLabel;
+    private static JTextArea lastShotStatistics;
+    private static String lastShotStatisticsString = "Last Shot Statistics:\n" +
+            "Position Score: 0\n" +
+            "Wind Force Penalty: 0\n" +
+            "Angle Score: 0\n" +
+            "Mass Score: 0\n" +
+            "Target Radius Score: 0";
 
     private static final String INSTRUCTION = "Welcome to Cannon Simulation!\n" +
             "\nMove cannon's position = W A S D\n" +
             "Move shooting direction = Left | Right \n" +
             "Launch bullet = Space\n" +
             "\nThere can only one bullet at a time";
+    
+    private static final String SCORING_METHOD = "Here are how the score is calculated:\n\n" +
+            "Score =\n" +
+            "(Target X Position-Cannon X Position)/10\n" +
+            " - Wind Force (if Angle is 360 or 0)\n" +
+            " + Angle of Direction%360\n" +
+            " + Mass\n" +
+            " + 300/Target Radius*10";
 
-    private int cpSize = 230;      // set control panel's width
+    private static int cpSize = 230;      // set control panel's width
 
     private void updateBullets() {
         bulletString = "Bullets: " + Integer.toString(currentBullets) + "/" + Integer.toString(maxBullets);
     }
 
+    public static void updateScore() {
+        scoreString = "Your Score: " + Integer.toString(score);
+        scoreLabel.setText(scoreString);
+    }
+
+    public static void updateScoreStatistics(int positionScore, int windPenalty, int angleScore, int massScore, int radiusScore) {
+        lastShotStatisticsString = "Last Shot Statistics:\n" +
+            "Position Score: " + Integer.toString(positionScore) +
+            "\nWind Force Penalty: " + Integer.toString(windPenalty) +
+            "\nAngle Score: " + Integer.toString(angleScore) +
+            "\nMass Score: " + Integer.toString(massScore) +
+            "\nTarget Radius Score: " + Integer.toString(radiusScore) +
+            "\nLast Shot Total Score: " + Integer.toString(positionScore+windPenalty+angleScore+massScore+radiusScore);
+        lastShotStatistics.setText(lastShotStatisticsString);
+    }
+
+    public static void addScore(int scoreAdd) {
+        score += scoreAdd;
+    }
+
     public Shooter() {
         // setup the frame
-        frame = new JFrame("Graphing App");
+        frame = new JFrame("Target Shooter");
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
@@ -115,6 +157,17 @@ class Shooter {
         frame.add(angleField);
         frame.add(applyButton);
 
+        // score label
+        scoreLabel = new JLabel(scoreString);
+        scoreLabel.setBounds(5, 325, cpSize-5, 20);
+        frame.add(scoreLabel);
+        JTextArea scoringMethod = new JTextArea(SCORING_METHOD);
+        scoringMethod.setBounds(5, 345, cpSize - 5, 150);
+        frame.add(scoringMethod);
+        lastShotStatistics = new JTextArea(lastShotStatisticsString);
+        lastShotStatistics.setBounds(5, 500, cpSize - 5, 150);
+        frame.add(lastShotStatistics);
+
         // setup drawing area
         DrawingArea drawingArea = new DrawingArea(frame.getWidth(), frame.getHeight(), cpSize);
         cannon = new Cannon(drawingArea.GRAPH_SCALE / 2, drawingArea.getOriginX(), drawingArea.getOriginY());
@@ -155,13 +208,17 @@ class Shooter {
                         cannon.moveUp();
                         break;
                     case KeyEvent.VK_A:
+                        if(cannon.getPositionX() > 0) {
                         cannon.moveLeft();
+                        }
                         break;
                     case KeyEvent.VK_S:
                         cannon.moveDown();
                         break;
                     case KeyEvent.VK_D:
-                        cannon.moveRight();
+                        if(cannon.getPositionX() < drawingArea.getWidth()/4 + 100) {
+                            cannon.moveRight();
+                        }
                         break;
                 }
             }

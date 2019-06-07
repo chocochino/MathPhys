@@ -49,6 +49,10 @@ class Cannon {
         g2.setColor(tempColor);
     }
 
+    public int getPositionX() {
+        return positionX;
+    }
+
     public double getBarrelWidth() {
         return barrelWidth;
     }
