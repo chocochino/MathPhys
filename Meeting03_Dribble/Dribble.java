@@ -11,7 +11,10 @@ import java.util.ArrayList;
 
     TODO:
      0. Review about elastic and inelastic collisions. What happened when you change the coefficient of resistution (COR)?
+        > If affects the bounciness of the balls.
+        > 0.9 means every bounce the balls loses 10% of its force (remaning 90% thus 0.9)
      1. Add more balls with different colors, sizes, and velocities
+        > OK! It's done.
      2. Create UI to add new balls and delete some instances
      3. Add COR field to the UI, so user can choose between using different COR than the default or not
      4. Turn all balls into linearly moving ones (apply Newton's first law here).
@@ -40,6 +43,7 @@ public class Dribble {
         // create the ball
         balls.add(new Ball(300, 200, 50, 10, 10, Color.blue));
         balls.add(new Ball(300, 100, 20, 3, -3, Color.green));
+        balls.add(new Ball(150, 150, 20, 3, -3, Color.gray));
 
         drawingArea = new DrawingArea(frame.getWidth(), frame.getHeight(), balls, walls);
         frame.add(drawingArea);
